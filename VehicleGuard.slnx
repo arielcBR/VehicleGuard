@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/VehicleGuard.Api/VehicleGuard.Api.csproj" />
+    <Project Path="src/VehicleGuard.Shared/VehicleGuard.Shared.csproj" />
+    <Project Path="src/VehicleGuard.Worker/VehicleGuard.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/VehicleGuard.Api.Tests/VehicleGuard.Api.Tests.csproj" />
+    <Project Path="tests/VehicleGuard.Worker.Tests/VehicleGuard.Worker.Tests.csproj" />
+  </Folder>
+</Solution>
