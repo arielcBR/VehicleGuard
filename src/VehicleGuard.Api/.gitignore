@@ -1,0 +1,38 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+out/
+debug/
+release/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.idea/
+
+# Rider
+.idea/
+
+# ASP.NET
+appsettings.*.json
+!appsettings.json
+
+# Logs
+*.log
+
+# EF Core Migrations snapshot backups
+*.snap
+
+# Mac / Linux
+.DS_Store
+Thumbs.db
+
+# Other
+node_modules/
+wwwroot/lib/

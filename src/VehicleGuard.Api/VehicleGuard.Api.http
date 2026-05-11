@@ -1,0 +1,17 @@
+@Host = http://localhost:5289
+
+### Obter todos os GPS de um dispositivo
+GET {{Host}}/api/gps/device/1
+Accept: application/json
+
+### Criar um novo registro de GPS
+POST {{Host}}/api/gps
+Content-Type: application/json
+
+{
+  "embeddedDeviceId": 1,
+  "latitude": -29.918,
+  "longitude": -51.178,
+  "age": 0,
+  "hdop": 1.2
+}
