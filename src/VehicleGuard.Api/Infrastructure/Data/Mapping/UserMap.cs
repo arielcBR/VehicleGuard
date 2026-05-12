@@ -35,6 +35,11 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasConversion<int>()
             .IsRequired();
         builder
+            .Property(x => x.FcmToken)
+            .HasColumnName("FcmToken")
+            .HasColumnType("NVARCHAR(255)")
+            .IsRequired(false);
+        builder
             .Property(x => x.CreatedAt)
             .HasColumnName("CreatedAt")
             .HasColumnType("datetime2")
@@ -45,6 +50,21 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasColumnType("datetime2")
             .IsRequired(false);
         
+        builder
+            .HasMany(x => x.VehicleEvents)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .HasConstraintName("FK_VehicleEvents_User_UserId")
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(x => x.NotificationLogs)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .HasConstraintName("FK_NotificationLogs_User_UserId")
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Indexes
         builder
             .HasIndex(x => x.Email)
             .HasDatabaseName("IX_User_Email")

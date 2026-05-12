@@ -16,13 +16,17 @@ public class VehicleGuardDbContext : DbContext
     public DbSet<EmbeddedDevice> EmbeddedDevices { get; set; }
     public DbSet<CommandLog> CommandLogs { get; set; }
     public DbSet<Gps> Gps { get; set; }
+    public DbSet<VehicleEvent> VehicleEvents { get; set; }
+    public DbSet<NotificationLog> NotificationLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new CommandLogMap());
         modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new VehicleMap());
         modelBuilder.ApplyConfiguration(new EmbeddedDeviceMap());
+        modelBuilder.ApplyConfiguration(new CommandLogMap());
         modelBuilder.ApplyConfiguration(new GpsMap());
+        modelBuilder.ApplyConfiguration(new VehicleEventMap());
+        modelBuilder.ApplyConfiguration(new NotificationLogMap());
     }
 }
