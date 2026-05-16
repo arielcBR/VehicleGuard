@@ -1,0 +1,296 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-16T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_vehicleguard",
+      "_type": "workspace",
+      "name": "VehicleGuard API",
+      "description": "Surveillance API for vehicle control",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_vehicleguard",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:5028",
+        "token": ""
+      }
+    },
+
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_vehicleguard",
+      "name": "Auth",
+      "description": "Autenticação"
+    },
+    {
+      "_id": "req_auth_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/Auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"usuario@email.com\",\n  \"password\": \"senha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+
+    {
+      "_id": "fld_users",
+      "_type": "request_group",
+      "parentId": "wrk_vehicleguard",
+      "name": "Users",
+      "description": "Gerenciamento de usuários"
+    },
+    {
+      "_id": "req_users_create",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Criar usuário",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/Users",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Ariel Luiz\",\n  \"email\": \"ariel@email.com\",\n  \"password\": \"senha123\",\n  \"repeatPassword\": \"senha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_users_getall",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Listar usuários",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/Users",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_users_getbyid",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Buscar usuário por ID",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/Users/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_users_update",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Atualizar usuário",
+      "method": "PUT",
+      "url": "{{ base_url }}/v1/Users/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"userName\": \"Novo Nome\",\n  \"email\": \"novo@email.com\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_users_delete",
+      "_type": "request",
+      "parentId": "fld_users",
+      "name": "Deletar usuário",
+      "method": "DELETE",
+      "url": "{{ base_url }}/v1/Users/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+
+    {
+      "_id": "fld_vehicles",
+      "_type": "request_group",
+      "parentId": "wrk_vehicleguard",
+      "name": "Vehicles",
+      "description": "Gerenciamento de veículos"
+    },
+    {
+      "_id": "req_vehicles_create",
+      "_type": "request",
+      "parentId": "fld_vehicles",
+      "name": "Criar veículo",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/Vehicles",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"licensePlate\": \"ABC1234\",\n  \"color\": \"Preto\",\n  \"brand\": \"Toyota\",\n  \"model\": \"Corolla\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_vehicles_getall",
+      "_type": "request",
+      "parentId": "fld_vehicles",
+      "name": "Listar veículos",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/Vehicles",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_vehicles_getbyid",
+      "_type": "request",
+      "parentId": "fld_vehicles",
+      "name": "Buscar veículo por ID",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/Vehicles/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_vehicles_update",
+      "_type": "request",
+      "parentId": "fld_vehicles",
+      "name": "Atualizar veículo",
+      "method": "PUT",
+      "url": "{{ base_url }}/v1/Vehicles/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"color\": \"Branco\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_vehicles_delete",
+      "_type": "request",
+      "parentId": "fld_vehicles",
+      "name": "Deletar veículo",
+      "method": "DELETE",
+      "url": "{{ base_url }}/v1/Vehicles/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+
+    {
+      "_id": "fld_embedded",
+      "_type": "request_group",
+      "parentId": "wrk_vehicleguard",
+      "name": "EmbeddedDevices",
+      "description": "Gerenciamento de dispositivos embarcados"
+    },
+    {
+      "_id": "req_embedded_create",
+      "_type": "request",
+      "parentId": "fld_embedded",
+      "name": "Criar dispositivo embarcado",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/EmbeddedDevices",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"vehicleId\": 1\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_embedded_getall",
+      "_type": "request",
+      "parentId": "fld_embedded",
+      "name": "Listar dispositivos embarcados",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/EmbeddedDevices",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_embedded_getbyid",
+      "_type": "request",
+      "parentId": "fld_embedded",
+      "name": "Buscar dispositivo por ID",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/EmbeddedDevices/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_embedded_delete",
+      "_type": "request",
+      "parentId": "fld_embedded",
+      "name": "Deletar dispositivo embarcado",
+      "method": "DELETE",
+      "url": "{{ base_url }}/v1/EmbeddedDevices/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+
+    {
+      "_id": "fld_gps",
+      "_type": "request_group",
+      "parentId": "wrk_vehicleguard",
+      "name": "GPS",
+      "description": "Registro e consulta de telemetria GPS"
+    },
+    {
+      "_id": "req_gps_create",
+      "_type": "request",
+      "parentId": "fld_gps",
+      "name": "Registrar leitura GPS",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/gps",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"age\": 0,\n  \"latitude\": -29.7534,\n  \"longitude\": -51.1460,\n  \"hdop\": 1.2,\n  \"embeddedDeviceId\": 1\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_gps_getbydevice",
+      "_type": "request",
+      "parentId": "fld_gps",
+      "name": "Listar GPS por dispositivo",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/gps/embeddedDevice/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    },
+    {
+      "_id": "req_gps_getbyid",
+      "_type": "request",
+      "parentId": "fld_gps",
+      "name": "Buscar leitura GPS por ID",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/gps/1/embeddedDevice/1",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ]
+    }
+  ]
+}

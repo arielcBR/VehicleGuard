@@ -16,6 +16,7 @@ using VehicleGuard.Api.Repositories.Gps;
 using VehicleGuard.Api.Repositories.Users;
 using VehicleGuard.Api.Repositories.Vehicles;
 using VehicleGuard.Api.Services;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,18 @@ builder.Services.AddDbContext<VehicleGuardDbContext>(options => options.UseSqlSe
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
+});
+
+// Configurando openApi
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, ct) =>
+    {
+        document.Info.Title = "VehicleGuard.API";
+        document.Info.Version = "v1.0";
+        document.Info.Description = "Surveillance API for vehicle control";
+        return Task.CompletedTask;
+    });
 });
 
 // Configurando JWT
@@ -63,6 +76,13 @@ builder.Services.AddControllers()
     });
 
 var app = builder.Build();
+
+app.MapOpenApi();
+app.MapScalarApiReference(options =>
+{
+    options.Title = "VehicleGuard API";
+    options.Theme = ScalarTheme.DeepSpace;
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
