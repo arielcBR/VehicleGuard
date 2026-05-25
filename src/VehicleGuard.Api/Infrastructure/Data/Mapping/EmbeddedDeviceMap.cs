@@ -43,6 +43,13 @@ public class EmbeddedDeviceMap : IEntityTypeConfiguration<EmbeddedDevice>
             .WithOne(x => x.EmbeddedDevice)
             .HasForeignKey(x => x.EmbeddedDeviceId)
             .HasConstraintName("FK_Gps_EmbeddedDevice_EmbeddedDeviceId");
+
+        builder
+            .HasMany(x => x.VehicleEvents)
+            .WithOne(x => x.EmbeddedDevice)
+            .HasForeignKey(x => x.EmbeddedDeviceId)
+            .HasConstraintName("FK_VehicleEvents_EmbeddedDevice_EmbeddedDeviceId")
+            .OnDelete(DeleteBehavior.Restrict);
         
         // Indexes
         builder

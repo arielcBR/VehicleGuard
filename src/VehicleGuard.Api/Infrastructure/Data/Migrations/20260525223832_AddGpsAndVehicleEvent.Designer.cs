@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleGuard.Api.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using VehicleGuard.Api.Infrastructure.Data;
 namespace VehicleGuard.Api.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(VehicleGuardDbContext))]
-    partial class VehicleGuardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260525223832_AddGpsAndVehicleEvent")]
+    partial class AddGpsAndVehicleEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

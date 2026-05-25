@@ -10,5 +10,6 @@ public class EmbeddedDevice
     
     public IList<CommandLog> CommandLogs { get; set; } = new List<CommandLog>();
     public IList<Gps> Gps { get; set; } = new List<Gps>();
+    public IList<VehicleEvent> VehicleEvents { get; set; } = new List<VehicleEvent>();
     
 }

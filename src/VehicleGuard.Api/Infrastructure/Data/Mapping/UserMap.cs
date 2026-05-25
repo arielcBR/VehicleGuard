@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using VehicleGuard.Shared.Domain.Models;
-using VehicleGuard.Shared.Domain.Enums;
 
 namespace VehicleGuard.Api.Infrastructure.Data.Mapping;
 
@@ -50,12 +49,6 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasColumnType("datetime2")
             .IsRequired(false);
         
-        builder
-            .HasMany(x => x.VehicleEvents)
-            .WithOne(x => x.User)
-            .HasForeignKey(x => x.UserId)
-            .HasConstraintName("FK_VehicleEvents_User_UserId")
-            .OnDelete(DeleteBehavior.Restrict);
 
         builder
             .HasMany(x => x.NotificationLogs)

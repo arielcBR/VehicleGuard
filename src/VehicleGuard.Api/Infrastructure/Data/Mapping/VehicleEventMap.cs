@@ -13,35 +13,17 @@ public class VehicleEventMap : IEntityTypeConfiguration<VehicleEvent>
             .Property(x => x.Id)
             .ValueGeneratedOnAdd()
             .UseIdentityColumn();
-
+        
+        builder
+            .Property(x => x.GpsId)
+            .HasColumnName("GpsId")
+            .HasColumnType("int")
+            .IsRequired();
+        
         builder
             .Property(x => x.EmbeddedDeviceId)
             .HasColumnName("EmbeddedDeviceId")
-            .HasColumnType("INTEGER")
-            .IsRequired();
-
-        builder
-            .Property(x => x.VehicleId)
-            .HasColumnName("VehicleId")
-            .HasColumnType("INTEGER")
-            .IsRequired();
-
-        builder
-            .Property(x => x.UserId)
-            .HasColumnName("UserId")
-            .HasColumnType("INTEGER")
-            .IsRequired();
-
-        builder
-            .Property(x => x.Latitude)
-            .HasColumnName("Latitude")
-            .HasColumnType("float")
-            .IsRequired();
-
-        builder
-            .Property(x => x.Longitude)
-            .HasColumnName("Longitude")
-            .HasColumnType("float")
+            .HasColumnType("int")
             .IsRequired();
 
         builder
@@ -56,12 +38,7 @@ public class VehicleEventMap : IEntityTypeConfiguration<VehicleEvent>
             .HasColumnName("IsSensitivePeriod")
             .HasColumnType("BIT")
             .IsRequired();
-
-        builder
-            .Property(x => x.IsUserNearby)
-            .HasColumnName("IsUserNearby")
-            .HasColumnType("BIT")
-            .IsRequired();
+        
 
         builder
             .Property(x => x.OccurredAt)
@@ -69,46 +46,21 @@ public class VehicleEventMap : IEntityTypeConfiguration<VehicleEvent>
             .HasColumnType("datetime2")
             .IsRequired();
 
-        builder
-            .Property(x => x.CreatedAt)
-            .HasColumnName("CreatedAt")
-            .HasColumnType("datetime2")
-            .HasDefaultValueSql("getdate()");
-
         // Relationships
         builder
-            .HasOne(x => x.User)
-            .WithMany(x => x.VehicleEvents)
-            .HasForeignKey(x => x.UserId)
-            .HasConstraintName("FK_VehicleEvents_User_UserId")
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .HasOne(x => x.Vehicle)
+            .HasOne(x => x.Gps)
             .WithMany()
-            .HasForeignKey(x => x.VehicleId)
-            .HasConstraintName("FK_VehicleEvents_Vehicle_VehicleId")
+            .HasForeignKey(x => x.GpsId)
+            .HasConstraintName("FK_VehicleEvents_Gps_GpsId")
             .OnDelete(DeleteBehavior.Restrict);
-
         builder
             .HasOne(x => x.EmbeddedDevice)
-            .WithMany()
+            .WithMany(x => x.VehicleEvents)
             .HasForeignKey(x => x.EmbeddedDeviceId)
             .HasConstraintName("FK_VehicleEvents_EmbeddedDevice_EmbeddedDeviceId")
             .OnDelete(DeleteBehavior.Restrict);
 
         // Indexes
-        builder
-            .HasIndex(x => x.UserId)
-            .HasDatabaseName("IX_VehicleEvents_UserId");
-
-        builder
-            .HasIndex(x => x.VehicleId)
-            .HasDatabaseName("IX_VehicleEvents_VehicleId");
-
-        builder
-            .HasIndex(x => x.EmbeddedDeviceId)
-            .HasDatabaseName("IX_VehicleEvents_EmbeddedDeviceId");
 
         builder
             .HasIndex(x => x.OccurredAt)

@@ -84,6 +84,15 @@ app.MapScalarApiReference(options =>
     options.Theme = ScalarTheme.DeepSpace;
 });
 
+app.Use(async (context, next) =>
+{
+    // Coloque o seu BREAKPOINT na linha abaixo!
+    var authHeader = context.Request.Headers["Authorization"].ToString();
+    var todosOsHeaders = context.Request.Headers;
+
+    await next(); // Continua para o próximo middleware (UseAuthentication)
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

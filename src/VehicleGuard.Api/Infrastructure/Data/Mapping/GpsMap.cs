@@ -38,7 +38,8 @@ public class GpsMap : IEntityTypeConfiguration<Gps>
             .Property(x => x.CreatedAt)
             .HasColumnName("CreatedAt")
             .HasColumnType("datetime2")
-            .HasDefaultValueSql("getdate()");
+            .HasDefaultValueSql("GETUTCDATE()")
+            .IsRequired();
         
         // Foreign Keys
         builder
