@@ -60,7 +60,9 @@ public class GpsController : ControllerBase
         try
         {
             var gpsList = await _gpsRepository.GetAllByDeviceAsync(embeddedDeviceId, userId.Value);
-            return gpsList == null ? Ok(new ResultViewModel<GpsDto>(new GpsDto())) : Ok(new ResultViewModel<List<GpsDto>>(gpsList));
+            return gpsList == null 
+                ? NotFound(new ResultViewModel<object>($"No GPS records found for device {embeddedDeviceId}")) 
+                : Ok(new ResultViewModel<List<GpsDto>>(gpsList));
         }
         catch
         {

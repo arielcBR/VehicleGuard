@@ -50,13 +50,13 @@ public class VehicleRepository : IVehicleRepository
         foreach (var vehicle in vehicles)
         {
             VehicleDto vehicleDto = new VehicleDto
-            {
-                Id = vehicle.Id,
-                LicensePlate = vehicle.LicensePlate,
-                Color = vehicle.Color,
-                Brand = vehicle.Brand,
-                Model = vehicle.Model,
-            };
+            (
+                Id: vehicle.Id,
+                LicensePlate: vehicle.LicensePlate,
+                Color: vehicle.Color,
+                Brand: vehicle.Brand,
+                Model: vehicle.Model
+            );
             vehicleDtos.Add(vehicleDto);
         }
         
@@ -73,13 +73,14 @@ public class VehicleRepository : IVehicleRepository
         if(vehicle == null)
             return null;
         
-        return new VehicleDto()
-        {
-            LicensePlate = vehicle.LicensePlate,
-            Color = vehicle.Color,
-            Brand = vehicle.Brand,
-            Model = vehicle.Model,
-        };
+        return new VehicleDto
+        (
+            Id: vehicle.Id,
+            LicensePlate: vehicle.LicensePlate,
+            Color: vehicle.Color,
+            Brand: vehicle.Brand,
+            Model: vehicle.Model
+        );
     }
 
     public async Task<Vehicle?> GetByIdAsync(int vehicleId, int userId)
@@ -113,13 +114,13 @@ public class VehicleRepository : IVehicleRepository
         await _db.SaveChangesAsync();
 
         return new VehicleDto
-        {
-            Id = vehicleInDatabase.Id,
-            LicensePlate = vehicleInDatabase.LicensePlate,
-            Color = vehicleInDatabase.Color,
-            Brand = vehicleInDatabase.Brand,
-            Model = vehicleInDatabase.Model,
-        };
+        (
+            Id: vehicleInDatabase.Id,
+            LicensePlate: vehicleInDatabase.LicensePlate,
+            Color: vehicleInDatabase.Color,
+            Brand: vehicleInDatabase.Brand,
+            Model: vehicleInDatabase.Model
+        );
     }
 
 }

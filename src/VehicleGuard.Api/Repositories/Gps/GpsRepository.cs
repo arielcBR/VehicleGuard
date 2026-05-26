@@ -39,13 +39,13 @@ public class GpsRepository : IGpsRepository
         await _db.SaveChangesAsync();
 
         return new GpsDto
-        {
-            Age = result.Entity.Age,
-            Latitude = result.Entity.Latitude,
-            Longitude = result.Entity.Longitude,
-            Hdop = result.Entity.Hdop,
-            EmbeddedDeviceId = result.Entity.EmbeddedDeviceId,
-        };
+        (
+            Age: result.Entity.Age,
+            Latitude: result.Entity.Latitude,
+            Longitude: result.Entity.Longitude,
+            Hdop: result.Entity.Hdop,
+            EmbeddedDeviceId: result.Entity.EmbeddedDeviceId
+        );
     }
 
     public async Task<List<GpsDto>?> GetAllByDeviceAsync(int embeddedDeviceId, int userId)
@@ -62,13 +62,13 @@ public class GpsRepository : IGpsRepository
             .AsNoTracking()
             .Where(x => x.EmbeddedDeviceId == embeddedDeviceId)
             .Select(gps => new GpsDto
-            {
-                Age = gps.Age,
-                Latitude = gps.Latitude,
-                Longitude = gps.Longitude,
-                Hdop = gps.Hdop,
-                EmbeddedDeviceId = gps.EmbeddedDeviceId,
-            })
+            (
+                Age: gps.Age,
+                Latitude: gps.Latitude,
+                Longitude: gps.Longitude,
+                Hdop: gps.Hdop,
+                EmbeddedDeviceId: gps.EmbeddedDeviceId
+            ))
             .ToListAsync();
         
         return listOfGps;
@@ -88,13 +88,13 @@ public class GpsRepository : IGpsRepository
             .AsNoTracking()
             .Where(x => x.Id == gpsId && x.EmbeddedDeviceId == embeddedDeviceId)
             .Select(gps => new GpsDto
-            {
-                Age = gps.Age,
-                Latitude = gps.Latitude,
-                Longitude = gps.Longitude,
-                Hdop = gps.Hdop,
-                EmbeddedDeviceId = gps.EmbeddedDeviceId,
-            })
+            (
+                Age: gps.Age,
+                Latitude: gps.Latitude,
+                Longitude: gps.Longitude,
+                Hdop: gps.Hdop,
+                EmbeddedDeviceId: gps.EmbeddedDeviceId
+            ))
             .FirstOrDefaultAsync();
         
         return gps;

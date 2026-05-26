@@ -24,13 +24,13 @@ public class UserRepository : IUserRepository
         var result = await _db.Users
             .AsNoTracking()
             .Select(user => new UserDto
-            {
-                Id = user.Id,
-                UserName = user.Username,
-                Email = user.Email,
-                Role = user.Role,
-                CreatedAt = user.CreatedAt,
-            })
+            (
+                Id: user.Id,
+                UserName: user.Username,
+                Role: user.Role,
+                Email: user.Email,
+                CreatedAt: user.CreatedAt
+            ))
             .ToListAsync();
 
         if (result.Count == 0)
@@ -48,26 +48,26 @@ public class UserRepository : IUserRepository
         await _db.SaveChangesAsync();
         
         var userResponse = new UserDto
-        {
-            Id = result.Entity.Id,
-            UserName = result.Entity.Username,
-            Role = result.Entity.Role,
-            Email = result.Entity.Email,
-            CreatedAt = result.Entity.CreatedAt,
-        };
+        (
+            Id: result.Entity.Id,
+            UserName: result.Entity.Username,
+            Role: result.Entity.Role,
+            Email: result.Entity.Email,
+            CreatedAt: result.Entity.CreatedAt
+        );
         return userResponse;
     }
 
     public async Task<UserDto?> GetByIdAsync(int id)  
         => await _db.Users
             .Select(user => new UserDto
-            {
-                Id = user.Id,
-                UserName = user.Username,
-                Email = user.Email,
-                Role = user.Role,
-                CreatedAt = user.CreatedAt,
-            })
+            (
+                Id: user.Id,
+                UserName: user.Username,
+                Role: user.Role,
+                Email: user.Email,
+                CreatedAt: user.CreatedAt
+            ))
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync();
     
@@ -109,12 +109,13 @@ public class UserRepository : IUserRepository
         var result = _db.Users.Update(userDatabase);
         await _db.SaveChangesAsync();
         return new UserDto
-        {
-            Id = result.Entity.Id,
-            UserName = result.Entity.Username,
-            Email = result.Entity.Email,
-            Role = result.Entity.Role,
-        };
+        (
+            Id: result.Entity.Id,
+            UserName: result.Entity.Username,
+            Role: result.Entity.Role,
+            Email: result.Entity.Email,
+            CreatedAt: result.Entity.CreatedAt
+        );
     }
 
     public async Task<User?> DeleteAsync(int id)

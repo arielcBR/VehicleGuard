@@ -58,10 +58,6 @@ public class TokenService
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         var jwt = tokenHandler.WriteToken(securityToken);
         
-        return new LoginResponseDto 
-            {
-                Expiration = securityToken.ValidTo,
-                Token = jwt
-            };
+        return new LoginResponseDto(jwt, securityToken.ValidTo);
     }
 }

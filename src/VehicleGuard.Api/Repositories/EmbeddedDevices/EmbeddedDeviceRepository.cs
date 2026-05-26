@@ -18,9 +18,9 @@ public class EmbeddedDeviceRepository : IEmbeddedDeviceRepository
         _vehicleRepository = vehicleRepository;
     }
     
-    public async Task<EmbeddedDeviceDto?> CreateAsync(CreateEmbeddedDeviceDto DeviceEmbeddedDto, int userId)
+    public async Task<EmbeddedDeviceDto?> CreateAsync(CreateEmbeddedDeviceDto deviceEmbeddedDto, int userId)
     {
-        var vehicleId = DeviceEmbeddedDto.VehicleId;
+        var vehicleId = deviceEmbeddedDto.VehicleId;
         var vehicleInDatabase = await _vehicleRepository.GetByIdAsync(vehicleId, userId);
 
         if (vehicleInDatabase == null)
@@ -32,14 +32,14 @@ public class EmbeddedDeviceRepository : IEmbeddedDeviceRepository
             CreatedAt = DateTime.UtcNow,
         };
 
-        var EmbeddedDeviceCreated = await _db.EmbeddedDevices.AddAsync(embeddedDevice);
+        var embeddedDeviceCreated = await _db.EmbeddedDevices.AddAsync(embeddedDevice);
         await _db.SaveChangesAsync();
 
         var result = new EmbeddedDeviceDto
-        {
-            Id = EmbeddedDeviceCreated.Entity.Id,
-            VehicleId = EmbeddedDeviceCreated.Entity.VehicleId,
-        };
+        (
+            Id: embeddedDeviceCreated.Entity.Id,
+            VehicleId: embeddedDeviceCreated.Entity.VehicleId
+        );
         
         return result;
     }
@@ -51,11 +51,11 @@ public class EmbeddedDeviceRepository : IEmbeddedDeviceRepository
             .AsNoTracking()
             .Where(x => x.Vehicle.UserId == userId)
             .Select(embeddedDevice => new EmbeddedDeviceDto 
-            {
-                Id = embeddedDevice.Id,
-                VehicleId = embeddedDevice.VehicleId,
-                UpdatedAt = embeddedDevice.UpdatedAt
-            })
+            (
+                Id: embeddedDevice.Id,
+                VehicleId: embeddedDevice.VehicleId,
+                UpdatedAt: embeddedDevice.UpdatedAt
+            ))
             .ToListAsync();
         
         return listOfEmbeddedDevice.Count == 0 ? new List<EmbeddedDeviceDto>() : listOfEmbeddedDevice;
@@ -67,12 +67,11 @@ public class EmbeddedDeviceRepository : IEmbeddedDeviceRepository
             .Include(x => x.Vehicle) 
             .AsNoTracking() 
             .Where(x => x.Id == embeddedDeviceId && x.Vehicle.UserId == userId) 
-            .Select(embeddedDevice => new EmbeddedDeviceDto 
-            {
-                Id = embeddedDevice.Id,
-                VehicleId = embeddedDevice.VehicleId,
-                UpdatedAt = embeddedDevice.UpdatedAt
-            })
+            .Select(embeddedDevice => new EmbeddedDeviceDto(
+                Id: embeddedDevice.Id,
+                VehicleId: embeddedDevice.VehicleId,
+                UpdatedAt: embeddedDevice.UpdatedAt
+            ))
             .FirstOrDefaultAsync();
         
         if (embeddedDevice == null)
@@ -87,13 +86,14 @@ public class EmbeddedDeviceRepository : IEmbeddedDeviceRepository
         if (lastGps == null)
             return embeddedDevice;
         
-        embeddedDevice.Latitude = lastGps.Latitude;
-        embeddedDevice.Longitude = lastGps.Longitude;
-        embeddedDevice.Hdop = lastGps.Hdop;
-        embeddedDevice.Age = lastGps.Age;
-        embeddedDevice.LastSeenAt = DateTime.UtcNow - lastGps.CreatedAt;
-            
-        return embeddedDevice;
+        return embeddedDevice with
+        {
+            Latitude = lastGps.Latitude,
+            Longitude = lastGps.Longitude,
+            Hdop = lastGps.Hdop,
+            Age = lastGps.Age,
+            LastSeenAt = DateTime.UtcNow - lastGps.CreatedAt
+        };
     }
 
     public async Task<bool> DeleteAsync(int embeddedDeviceId, int userId)

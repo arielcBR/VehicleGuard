@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VehicleGuard.Api.ViewModels;
@@ -40,12 +39,13 @@ public class VehiclesController : ControllerBase
                 return Conflict(new ResultViewModel<object>("License plate already exists."));
             
             var vehicleResponse = new VehicleDto
-            {
-                Brand = result.Brand,
-                Model = result.Model,
-                Color = result.Color,
-                LicensePlate = result.LicensePlate,
-            };
+            (
+                Id: result.Id,
+                Brand: result.Brand,
+                Model: result.Model,
+                Color: result.Color,
+                LicensePlate: result.LicensePlate
+            );
 
             return Created("", new ResultViewModel<VehicleDto>(vehicleResponse));
         }
@@ -93,13 +93,13 @@ public class VehiclesController : ControllerBase
                 return NotFound(new ResultViewModel<object>($"Vehicle with id {vehicleId} not found."));
 
             var vehicleDto = new VehicleDto
-            {
-                Id = vehicle.Id,
-                Brand = vehicle.Brand,
-                Model = vehicle.Model,
-                Color = vehicle.Color,
-                LicensePlate = vehicle.LicensePlate,
-            };
+            (
+                Id: vehicle.Id,
+                Brand: vehicle.Brand,
+                Model: vehicle.Model,
+                Color: vehicle.Color,
+                LicensePlate: vehicle.LicensePlate
+            );
 
             return Ok(new ResultViewModel<VehicleDto>(vehicleDto));
         }

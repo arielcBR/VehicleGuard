@@ -2,18 +2,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VehicleGuard.Shared.DTOs.Vehicles;
 
-public class CreateVehicleDto
-{
+public record CreateVehicleDto(
     [Required(ErrorMessage = "License plate is required")]
     [MaxLength(7, ErrorMessage = "The license plate is too long")]
-    public required string LicensePlate { get; set; }
-    
+    string LicensePlate,
+
     [Required(ErrorMessage = "Color is required")]
-    public required string Color { get; set; }
-    
+    string Color,
+
     [Required(ErrorMessage = "Brand is required")]
-    public required string Brand { get; set; }
-    
+    string Brand,
+
     [Required(ErrorMessage = "Model is required")]
-    public required string Model { get; set; }
-}
+    string Model
+);
